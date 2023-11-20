@@ -1,14 +1,14 @@
 import { Server } from "./server";
-import { PayloadLogin, PayloadLoginResponse, SocketMessage, SocketMessageType } from "./socketAPITypes";
+import { SocketMessage, SocketMessageType, PayloadAuth, PayloadAuthResponse } from "./socketAPITypes";
 
 const server = new Server(5665);
 
 server.addIncomigMessageListener((client, message) => {
-    if (message.type == SocketMessageType.LOGIN) {
-        const { userName, password } = message.payload as PayloadLogin;
+    if (message.type == SocketMessageType.AUTH) {
+        const { userName, password } = message.payload as PayloadAuth;
         server.sendMessage(client, {
-            type: SocketMessageType.LOGIN_RESPONSE,
-            payload: { success: true, token: userName + password } as PayloadLoginResponse,
+            type: SocketMessageType.AUTH_RESPONSE,
+            payload: { success: true, token: userName + password } as PayloadAuthResponse,
         });
     }
 });
