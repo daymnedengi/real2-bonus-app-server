@@ -1,14 +1,16 @@
 import { Server } from "./server";
-import { SocketMessage, SocketMessageType, PayloadAuth, PayloadAuthResponse } from "./socketAPITypes";
+import { SocketMessageType, PayloadSendSMSRegCodeResponse } from "./socketAPITypes";
 
 const server = new Server(5665);
 
 server.addIncomigMessageListener((client, message) => {
-    if (message.type == SocketMessageType.AUTH) {
-        const { userName, password } = message.payload as PayloadAuth;
+    if (message.type == SocketMessageType.SEND_SMS_REG_CODE) {
         server.sendMessage(client, {
-            type: SocketMessageType.AUTH_RESPONSE,
-            payload: { success: true, token: userName + password } as PayloadAuthResponse,
+            type: SocketMessageType.SEND_SMS_REG_CODE_RESPONSE,
+            payload: {
+                success: true,
+                code: "12345",
+            } as PayloadSendSMSRegCodeResponse,
         });
     }
 });

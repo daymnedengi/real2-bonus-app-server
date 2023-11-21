@@ -1,27 +1,18 @@
 export enum SocketMessageType {
-    REG = "REG",
-    REG_RESPONSE = "REG_RESPONSE",
-    AUTH = "AUTH",
-    AUTH_RESPONSE = "AUTH_RESPONSE",
-    INCOMING_PUSH_NOTIFICATION = "INCOMING_PUSH_NOTIFICATION",
+    SEND_SMS_REG_CODE = "SEND_SMS_REG_CODE",
+    SEND_SMS_REG_CODE_RESPONSE = "SEND_SMS_REG_CODE_RESPONSE",
 }
 
 export interface SocketMessage {
     type: SocketMessageType;
-    payload: null | PayloadAuth | PayloadAuthResponse | PayloadIncomingPushNotification;
+    payload: null | PayloadSendSMSRegCode | PayloadSendSMSRegCodeResponse;
 }
 
-export interface PayloadAuth {
-    userName: string;
-    password: string;
+export interface PayloadSendSMSRegCode {
+    phoneNumber: string;
 }
 
-export interface PayloadAuthResponse {
+export interface PayloadSendSMSRegCodeResponse {
     success: boolean;
-    token: string | null;
-}
-
-export interface PayloadIncomingPushNotification {
-    title: string;
-    body: string;
+    code: string | null;
 }
